@@ -1,0 +1,27 @@
+{
+  "name": "react-localstorage",
+  "version": "0.0.1",
+  "description": "A mixin for automatically synchronizing a component's state with localStorage.",
+  "main": "react-localstorage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/STRML/react-localstorage.git"
+  },
+  "keywords": [
+    "react",
+    "localstorage"
+  ],
+  "author": "Samuel Reed <sam@tixelated.com> (http://strml.net/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/STRML/react-localstorage/issues"
+  },
+  "homepage": "https://github.com/STRML/react-localstorage",
+  "devDependencies": {
+    "envify": "~1.2.1",
+    "react": "~0.10.0"
+  }
+}
