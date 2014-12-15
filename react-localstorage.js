@@ -11,10 +11,10 @@ var Mixin = module.exports = {
     if (prevStoredState) {
       invariant(
         prevStoredState === JSON.stringify(prevState),
-        'While component ' + this.displayName + ' was saving state to localStorage, ' +
+        'While component ' + getDisplayName(this) + ' was saving state to localStorage, ' +
         'the localStorage entry was modified by another actor. This can happen when multiple ' +
         'components are using the same localStorage key. Set the property `localStorageKey` ' +
-        'on ' + this.displayName + '.'
+        'on ' + getDisplayName(this) + '.'
       );
     }
     ls.setItem(key, JSON.stringify(this.state));
@@ -22,22 +22,34 @@ var Mixin = module.exports = {
 
   componentWillMount: function() {
     loadStateFromLocalStorage(this);
+  },
+
+  componentDidMount: function () {
+    // we have to save it to make the saved state
+    // correspond to the updated component state structure
+    ls.setItem(getLocalStorageKey(this), JSON.stringify(this.state));
   }
 };
 
 function loadStateFromLocalStorage(component) {
-  if (!ls) return;
-  var key = getLocalStorageKey(component);
-  var storedState = ls.getItem(key);
-  if (storedState) {
+    if (!ls) return;
+    var key = getLocalStorageKey(component);
     try {
-      component.setState(JSON.parse(storedState));
+      var storedState = JSON.parse(ls.getItem(key));
+      if (storedState) {
+        component.setState(storedState);
+      }
     } catch(e) {
-      if (console) console.warn("Unable to load state for", component.displayName, "from localStorage.");
+      if (console) console.warn("Unable to load state for", getDisplayName(component), "from localStorage.");
     }
-  }
+}
+
+function getDisplayName(component) {
+  // at least, we cannot get displayname 
+  // via this.displayname in react 0.12
+  return component.displayName || component.constructor.displayName;
 }
 
 function getLocalStorageKey(component) {
-  return component.props.localStorageKey || component.displayName || 'react-localstorage';
+  return component.props.localStorageKey || getDisplayName(component) || 'react-localstorage';
 }

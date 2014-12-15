@@ -44,3 +44,14 @@ key = component.props.localStorageKey || component.displayName || 'react-localst
 
 If you are synchronizing multiple components with the same `displayName` to localStorage,
 you must set a unique `localStorageKey` prop on the component.
+
+
+Tests
+------
+
+We use `karma` as the test runner. To run the test, simply `npm install` all the dependencies and run:
+
+```bash
+./node_modules/karma/bin/karma start
+```
+
