@@ -1,6 +1,6 @@
 {
   "name": "react-localstorage",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A mixin for automatically synchronizing a component's state with localStorage.",
   "main": "react-localstorage.js",
   "scripts": {
@@ -32,5 +32,8 @@
     "precommit-hook": "^1.0.7",
     "react": "^0.12.1",
     "reactify": "^0.17.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   }
 }
