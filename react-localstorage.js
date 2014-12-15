@@ -32,18 +32,16 @@ var Mixin = module.exports = {
 };
 
 function loadStateFromLocalStorage(component) {
-  if (!ls) return;
-  var key = getLocalStorageKey(component);
-  // `storedState` is string type, we need to parse it first.
-  // otherwise, the if statement will always be true.
-  var storedState = JSON.parse(ls.getItem(key));
-  if (storedState) {
+    if (!ls) return;
+    var key = getLocalStorageKey(component);
     try {
-      component.setState(storedState);
+      var storedState = JSON.parse(ls.getItem(key));
+      if (storedState) {
+        component.setState(storedState);
+      }
     } catch(e) {
       if (console) console.warn("Unable to load state for", getDisplayName(component), "from localStorage.");
     }
-  }
 }
 
 function getDisplayName(component) {

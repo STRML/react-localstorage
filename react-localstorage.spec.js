@@ -122,7 +122,7 @@ describe("suite", function() {
         });
         React.unmountComponentAtNode(div);
 
-        // develop add a initial state for this component
+        // developer add a initial state for this component
         // and then deploy the updated code.
         // from now, the structure of the saved state
         // is not the same as the new one.
