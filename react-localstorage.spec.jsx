@@ -1,3 +1,4 @@
+'use strict';
 /**
  *  @jsx React.DOM
  **/
@@ -7,7 +8,7 @@ var localstorageMixin = require('./react-localstorage');
 var assert = require('assert');
 
 var ls = global.localStorage;
-
+/*global describe, it, beforeEach, afterEach, before, after, expect */
 describe("suite", function() {
     beforeEach(function(){
         ls.clear();
@@ -109,7 +110,7 @@ describe("suite", function() {
             getInitialState: function () {
               return {
                 hello: null
-              }
+              };
             },
             render: function () {
               return <div>hello</div>;
@@ -134,14 +135,14 @@ describe("suite", function() {
               return {
                 hello: null,
                 newprop: null
-              }
+              };
             },
             render: function () {
               return <div>hello</div>;
             }
         });
-        var div = document.createElement('div');
-        var component = React.render(<ComponentUpdated />, div);
+        div = document.createElement('div');
+        component = React.render(<ComponentUpdated />, div);
         expect(function(){
           component.setState({
               hello: 'neptune'

@@ -1,3 +1,4 @@
+'use strict';
 module.exports = function(config) {
   config.set({
 
@@ -12,7 +13,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      '*.spec.js',
+      '*.spec.jsx',
     ],
 
 
@@ -22,13 +23,13 @@ module.exports = function(config) {
 
     browserify: {
         transform: [ 'reactify'],
-        extensions: ['.js']
+        extensions: ['.jsx']
      },
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      '*.js': ['browserify']
+      '*.jsx': ['browserify']
     },
 
 
@@ -62,6 +63,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
+    singleRun: true
   });
 };
