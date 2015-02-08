@@ -39,11 +39,15 @@ Options
 The key that state is serialized to under `localStorage` is chosen with the following code:
 
 ```javascript
-key = component.props.localStorageKey || component.displayName || 'react-localstorage';
+key = (component.getLocalStorageKey && component.getLocalStorageKey()) 
+  || component.props.localStorageKey || component.displayName || 'react-localstorage';
 ```
 
 If you are synchronizing multiple components with the same `displayName` to localStorage,
 you must set a unique `localStorageKey` prop on the component.
+
+Alternatively, you may define the method `getLocalStorageKey` on the component's prototype.
+This gives you the freedom to choose keys depending on the component's props or state.
 
 
 Tests
