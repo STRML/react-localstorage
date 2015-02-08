@@ -57,6 +57,27 @@ describe("suite", function() {
         );
     });
 
+    var ComponentUseMethod = React.createClass({
+        mixins: [localstorageMixin],
+        getLocalStorageKey: function() {
+          return this.constructor.displayName + 'DynamicSuffix';
+        },
+        render: function () {
+          return <div>hello</div>;
+        }
+    });
+
+    it("should use this.getLocalStorageKey() to store into localstorage", function() {
+        var component = TestUtil.renderIntoDocument(<ComponentUseMethod />);
+        component.setState({
+          rubber: 'ducky'
+        });
+        assert.equal(
+          JSON.stringify({rubber: 'ducky'}),
+          ls.getItem('ComponentUseMethodDynamicSuffix')
+        );
+    });
+
     var ComponentWithNoSetting = React.createClass({
         mixins: [localstorageMixin],
         render: function () {
