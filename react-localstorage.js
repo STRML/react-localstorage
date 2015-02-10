@@ -50,20 +50,24 @@ var Mixin = module.exports = {
 function loadStateFromLocalStorage(component, cb) {
   if (!ls) return;
   var key = getLocalStorageKey(component);
-  var waiting = false;
+  var settingState = false;
   try {
     var storedState = JSON.parse(ls.getItem(key));
     if (storedState) {
-      waiting = true;
-      component.setState(storedState, cb);
+      settingState = true;
+      component.setState(storedState, done);
     }
   } catch(e) {
     if (console) console.warn("Unable to load state for", getDisplayName(component), "from localStorage.");
   }
-  // Flag this component as loaded.
-  component.__stateLoadedFromLS = true;
   // If we didn't set state, run the callback right away.
-  if (!waiting) cb();
+  if (!settingState) done();
+
+  function done() {
+    // Flag this component as loaded.
+    component.__stateLoadedFromLS = true;
+    cb();
+  }
 }
 
 function getDisplayName(component) {
