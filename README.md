@@ -49,6 +49,12 @@ you must set a unique `localStorageKey` prop on the component.
 Alternatively, you may define the method `getLocalStorageKey` on the component's prototype.
 This gives you the freedom to choose keys depending on the component's props or state.
 
+Server Rendering
+----------------
+
+`LocalStorageMixin` will call `setState` on `componentDidMount`, so it will not break server rendering
+checksums. This is new as of `0.2.0`.
+
 
 Tests
 ------
