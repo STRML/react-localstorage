@@ -15,10 +15,10 @@ var Mixin = module.exports = {
    * There are a lot of ways this can happen, so it is worth throwing the error.
    */
   componentDidUpdate: function(prevProps, prevState) {
-    if (!ls || process.env.NODE_ENV === "production" || !this.__stateLoadedFromLS) return;
+    if (!ls || !this.__stateLoadedFromLS) return;
     var key = getLocalStorageKey(this);
     var prevStoredState = ls.getItem(key);
-    if (prevStoredState) {
+    if (prevStoredState && process.env.NODE_ENV !== "production") {
       invariant(
         prevStoredState === JSON.stringify(prevState),
         'While component ' + getDisplayName(this) + ' was saving state to localStorage, ' +
