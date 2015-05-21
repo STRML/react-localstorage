@@ -1,6 +1,6 @@
 {
   "name": "react-localstorage",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A mixin for automatically synchronizing a component's state with localStorage.",
   "main": "react-localstorage.js",
   "scripts": {
