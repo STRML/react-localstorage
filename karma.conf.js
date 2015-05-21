@@ -60,6 +60,14 @@ module.exports = function(config) {
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome'],
 
+    // create a custom Chrome launcher without the support for localStorage
+    customLaunchers: {
+      Chrome_without_ls: {
+        base: 'Chrome',
+        flags: ['--disable-local-storage']
+      }
+    },
+
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

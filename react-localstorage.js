@@ -1,7 +1,28 @@
 'use strict';
 var React = require('react');
 var invariant = require('react/lib/invariant');
-var ls = global.localStorage;
+var warn = require('react/lib/warning');
+var hasLocalStorage = 'localStorage' in global;
+var ls, testKey;
+
+if (hasLocalStorage) {
+  testKey = 'react-localstorage.mixin.test-key';
+  try {
+    // Access to global `localStorage` property must be guarded as it
+    // fails under iOS private session mode.
+    ls = global.localStorage;
+    ls.setItem(testKey, 'foo');
+    ls.removeItem(testKey);
+  } catch (e) {
+    hasLocalStorage = false;
+  }
+}
+
+// Warn if localStorage cannot be found or accessed.
+warn(
+  hasLocalStorage,
+  'localStorage not found. Component state will not be stored to localStorage.'
+);
 
 var Mixin = module.exports = {
   /**
@@ -15,7 +36,7 @@ var Mixin = module.exports = {
    * There are a lot of ways this can happen, so it is worth throwing the error.
    */
   componentDidUpdate: function(prevProps, prevState) {
-    if (!ls || !this.__stateLoadedFromLS) return;
+    if (!hasLocalStorage || !this.__stateLoadedFromLS) return;
     var key = getLocalStorageKey(this);
     var prevStoredState = ls.getItem(key);
     if (prevStoredState && process.env.NODE_ENV !== "production") {
@@ -38,6 +59,7 @@ var Mixin = module.exports = {
    * for an efficient diff.
    */
   componentDidMount: function () {
+    if (!hasLocalStorage) return;
     var me = this;
     loadStateFromLocalStorage(this, function() {
       // After setting state, mirror back to localstorage.
@@ -71,7 +93,7 @@ function loadStateFromLocalStorage(component, cb) {
 }
 
 function getDisplayName(component) {
-  // at least, we cannot get displayname 
+  // at least, we cannot get displayname
   // via this.displayname in react 0.12
   return component.displayName || component.constructor.displayName;
 }
