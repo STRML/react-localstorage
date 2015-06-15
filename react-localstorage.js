@@ -19,10 +19,12 @@ if (hasLocalStorage) {
 }
 
 // Warn if localStorage cannot be found or accessed.
-warn(
-  hasLocalStorage,
-  'localStorage not found. Component state will not be stored to localStorage.'
-);
+if (process.browser) {
+  warn(
+    hasLocalStorage,
+    'localStorage not found. Component state will not be stored to localStorage.'
+  );
+}
 
 var Mixin = module.exports = {
   /**
