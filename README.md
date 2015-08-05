@@ -39,7 +39,7 @@ Options
 The key that state is serialized to under `localStorage` is chosen with the following code:
 
 ```javascript
-key = (component.getLocalStorageKey && component.getLocalStorageKey()) 
+key = (component.getLocalStorageKey && component.getLocalStorageKey())
   || component.props.localStorageKey || component.displayName || 'react-localstorage';
 ```
 
@@ -48,6 +48,26 @@ you must set a unique `localStorageKey` prop on the component.
 
 Alternatively, you may define the method `getLocalStorageKey` on the component's prototype.
 This gives you the freedom to choose keys depending on the component's props or state.
+
+Filtering
+---------
+If you only want to save parts of state in localStorage, set `stateFiltersKeys` to an array of strings corresponding to the state keys you want to save.
+
+```javascript
+getDefaultProps: function() {
+  return {
+    stateFilterKeys: ['one', 'two']
+  };
+}
+```
+You can do this by setting a `stateFiltersKeys` prop or define the method `getStateFilterKeys` on the component's prototype.
+
+```javascript
+getStateFilterKeys: function() {
+  return ['one', 'two'];
+}
+```
+
 
 Server Rendering
 ----------------
@@ -64,4 +84,3 @@ We use `karma` as the test runner. To run the test, simply `npm install` all the
 ```bash
 ./node_modules/karma/bin/karma start
 ```
-

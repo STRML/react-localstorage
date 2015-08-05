@@ -43,14 +43,14 @@ var Mixin = module.exports = {
     var prevStoredState = ls.getItem(key);
     if (prevStoredState && process.env.NODE_ENV !== "production") {
       invariant(
-        prevStoredState === JSON.stringify(prevState),
+        prevStoredState === JSON.stringify(getSyncState(this, prevState)),
         'While component ' + getDisplayName(this) + ' was saving state to localStorage, ' +
         'the localStorage entry was modified by another actor. This can happen when multiple ' +
         'components are using the same localStorage key. Set the property `localStorageKey` ' +
         'on ' + getDisplayName(this) + '.'
       );
     }
-    ls.setItem(key, JSON.stringify(this.state));
+    ls.setItem(key, JSON.stringify(getSyncState(this, this.state)));
   },
 
   /**
@@ -66,7 +66,7 @@ var Mixin = module.exports = {
     loadStateFromLocalStorage(this, function() {
       // After setting state, mirror back to localstorage.
       // This prevents invariants if the developer has changed the initial state of the component.
-      ls.setItem(getLocalStorageKey(me), JSON.stringify(me.state));
+      ls.setItem(getLocalStorageKey(me), JSON.stringify(getSyncState(me, me.state)));
     });
   }
 };
@@ -105,4 +105,29 @@ function getLocalStorageKey(component) {
     return component.getLocalStorageKey();
   }
   return component.props.localStorageKey || getDisplayName(component) || 'react-localstorage';
+}
+
+function getStateFilterKeys(component) {
+  if (component.getStateFilterKeys) {
+    return typeof component.getStateFilterKeys() === 'string'
+      ? [component.getStateFilterKeys()] : component.getStateFilterKeys();
+  }
+  return typeof component.props.stateFilterKeys === 'string'
+    ? [component.props.stateFilterKeys] : component.props.stateFilterKeys;
+}
+
+/**
+* Filters state to only save keys defined in stateFilterKeys.
+* If stateFilterKeys is not set, returns full state.
+*/
+function getSyncState(component, state) {
+  var stateFilterKeys = getStateFilterKeys(component);
+  if (!stateFilterKeys) return state;
+  var result = {};
+  stateFilterKeys.forEach(function(sk) {
+    for (var key in state) {
+      if (state.hasOwnProperty(key) && sk === key) result[key] = state[key];
+    }
+  });
+  return result;
 }
