@@ -109,11 +109,11 @@ function getLocalStorageKey(component) {
 
 function getStateFilterKeys(component) {
   if (component.getStateFilterKeys) {
-    return typeof component.getStateFilterKeys() === 'string'
-      ? [component.getStateFilterKeys()] : component.getStateFilterKeys();
+    return typeof component.getStateFilterKeys() === 'string' ?
+      [component.getStateFilterKeys()] : component.getStateFilterKeys();
   }
-  return typeof component.props.stateFilterKeys === 'string'
-    ? [component.props.stateFilterKeys] : component.props.stateFilterKeys;
+  return typeof component.props.stateFilterKeys === 'string' ?
+    [component.props.stateFilterKeys] : component.props.stateFilterKeys;
 }
 
 /**

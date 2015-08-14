@@ -168,6 +168,55 @@ describe("suite", function() {
         hello: 'neptune'
       });
     }).not.toThrow();
+  });
 
+  var ComponentUseStateFilter = React.createClass({
+    mixins: [LocalStorageMixin],
+    displayName: 'componentStateFilter',
+    getDefaultProps: function() {
+      return {
+        stateFilterKeys: ['a', 'b']
+      };
+    },
+    render: function () {
+      return <div>hello</div>;
+    }
+  });
+
+  it("should only use state keys that match filter", function() {
+    var component = TestUtil.renderIntoDocument(<ComponentUseStateFilter />);
+    component.setState({
+      a: 'world',
+      b: 'bar',
+      c: 'shouldNotSync'
+    });
+    assert.equal(
+      JSON.stringify({a: 'world', 'b': 'bar'}),
+      ls.getItem('componentStateFilter')
+    );
+  });
+
+  var ComponentUseStateFilterFunc = React.createClass({
+    mixins: [LocalStorageMixin],
+    displayName: 'componentStateFilterFunc',
+    getStateFilterKeys: function() {
+      return ['a', 'b'];
+    },
+    render: function () {
+      return <div>hello</div>;
+    }
+  });
+
+  it("should only use state keys that match filter function", function() {
+    var component = TestUtil.renderIntoDocument(<ComponentUseStateFilterFunc />);
+    component.setState({
+      a: 'world',
+      b: 'bar',
+      c: 'shouldNotSync'
+    });
+    assert.equal(
+      JSON.stringify({a: 'world', 'b': 'bar'}),
+      ls.getItem('componentStateFilterFunc')
+    );
   });
 });
