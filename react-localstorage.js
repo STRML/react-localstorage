@@ -37,19 +37,26 @@ var Mixin = module.exports = {
    *
    * There are a lot of ways this can happen, so it is worth throwing the error.
    */
-  componentDidUpdate: function(prevProps, prevState) {
+  componentWillUpdate: function(nextProps, nextState) {
     if (!hasLocalStorage || !this.__stateLoadedFromLS) return;
     var key = getLocalStorageKey(this);
     var prevStoredState = ls.getItem(key);
     if (prevStoredState && process.env.NODE_ENV !== "production") {
       invariant(
-        prevStoredState === JSON.stringify(getSyncState(this, prevState)),
+        prevStoredState === JSON.stringify(getSyncState(this, this.state)),
         'While component ' + getDisplayName(this) + ' was saving state to localStorage, ' +
         'the localStorage entry was modified by another actor. This can happen when multiple ' +
         'components are using the same localStorage key. Set the property `localStorageKey` ' +
         'on ' + getDisplayName(this) + '.'
       );
     }
+  },
+
+  /**
+   * After the component updates, save the state.
+   */
+  componentDidUpdate: function() {
+    var key = getLocalStorageKey(this);
     ls.setItem(key, JSON.stringify(getSyncState(this, this.state)));
   },
 
