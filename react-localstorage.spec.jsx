@@ -12,6 +12,8 @@ var ls = global.localStorage;
 describe("suite", function() {
   beforeEach(function(){
     ls.clear();
+    // Cheap way to make the warn function throw so we can catch it easily
+    console.warn = function() { throw new Error([].slice.call(arguments).join(' ')); };
   });
 
   var ComponentUseDisplayName = React.createClass({

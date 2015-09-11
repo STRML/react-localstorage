@@ -1,7 +1,6 @@
 'use strict';
 var React = require('react');
-var invariant = require('react/lib/invariant');
-var warn = require('react/lib/warning');
+var warn = require('./lib/warning');
 var hasLocalStorage = 'localStorage' in global;
 var ls, testKey;
 
@@ -42,7 +41,7 @@ var Mixin = module.exports = {
     var key = getLocalStorageKey(this);
     var prevStoredState = ls.getItem(key);
     if (prevStoredState && process.env.NODE_ENV !== "production") {
-      invariant(
+      warn(
         prevStoredState === JSON.stringify(getSyncState(this, this.state)),
         'While component ' + getDisplayName(this) + ' was saving state to localStorage, ' +
         'the localStorage entry was modified by another actor. This can happen when multiple ' +
