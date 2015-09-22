@@ -49,14 +49,8 @@ var Mixin = module.exports = {
         'on ' + getDisplayName(this) + '.'
       );
     }
-  },
-
-  /**
-   * After the component updates, save the state.
-   */
-  componentDidUpdate: function() {
-    var key = getLocalStorageKey(this);
-    ls.setItem(key, JSON.stringify(getSyncState(this, this.state)));
+    // Since setState() can't be called in CWU, it's a fine time to save the state.
+    ls.setItem(key, JSON.stringify(getSyncState(this, nextState)));
   },
 
   /**
