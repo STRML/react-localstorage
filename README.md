@@ -51,7 +51,7 @@ This gives you the freedom to choose keys depending on the component's props or 
 
 Filtering
 ---------
-If you only want to save parts of state in localStorage, set `stateFiltersKeys` to an array of strings corresponding to the state keys you want to save.
+If you only want to save parts of state in localStorage, set `stateFilterKeys` to an array of strings corresponding to the state keys you want to save.
 
 ```javascript
 getDefaultProps: function() {
@@ -60,7 +60,7 @@ getDefaultProps: function() {
   };
 }
 ```
-You can do this by setting a `stateFiltersKeys` prop or define the method `getStateFilterKeys` on the component's prototype.
+You can do this by setting a `stateFilterKeys` prop or define the method `getStateFilterKeys` on the component's prototype.
 
 ```javascript
 getStateFilterKeys: function() {
