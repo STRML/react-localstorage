@@ -97,7 +97,7 @@ function loadStateFromLocalStorage(component, cb) {
 function getDisplayName(component) {
   // at least, we cannot get displayname
   // via this.displayname in react 0.12
-  return component.displayName || component.constructor.displayName;
+  return component.displayName || component.constructor.displayName || component.constructor.name;
 }
 
 function getLocalStorageKey(component) {
