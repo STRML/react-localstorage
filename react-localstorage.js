@@ -103,10 +103,9 @@ function getDisplayName(component) {
 }
 
 function getLocalStorageKey(component) {
-  if (component.getLocalStorageKey) {
-    return component.getLocalStorageKey();
-  }
+  if (component.getLocalStorageKey) return component.getLocalStorageKey();
   if (component.props.localStorageKey === false) return false;
+  if (typeof component.props.localStorageKey === 'function') return component.props.localStorageKey.call(component);
   return component.props.localStorageKey || getDisplayName(component) || 'react-localstorage';
 }
 
