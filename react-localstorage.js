@@ -39,6 +39,7 @@ var Mixin = module.exports = {
   componentWillUpdate: function(nextProps, nextState) {
     if (!hasLocalStorage || !this.__stateLoadedFromLS) return;
     var key = getLocalStorageKey(this);
+    if (key === false) return;
     var prevStoredState = ls.getItem(key);
     if (prevStoredState && process.env.NODE_ENV !== "production") {
       warn(
@@ -74,6 +75,7 @@ var Mixin = module.exports = {
 function loadStateFromLocalStorage(component, cb) {
   if (!ls) return;
   var key = getLocalStorageKey(component);
+  if (key === false) return;
   var settingState = false;
   try {
     var storedState = JSON.parse(ls.getItem(key));
@@ -104,6 +106,7 @@ function getLocalStorageKey(component) {
   if (component.getLocalStorageKey) {
     return component.getLocalStorageKey();
   }
+  if (component.props.localStorageKey === false) return false;
   return component.props.localStorageKey || getDisplayName(component) || 'react-localstorage';
 }
 
