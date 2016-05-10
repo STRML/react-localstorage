@@ -8,7 +8,7 @@ Usage
 
 A simple component:
 
-```javascript
+```js
 var React = require('react');
 var LocalStorageMixin = require('react-localstorage');
 
@@ -39,15 +39,21 @@ Options
 The key that state is serialized to under `localStorage` is chosen with the following code:
 
 ```javascript
-key = (component.getLocalStorageKey && component.getLocalStorageKey())
-  || component.props.localStorageKey || component.displayName || 'react-localstorage';
+function getLocalStorageKey(component) {
+  if (component.getLocalStorageKey) return component.getLocalStorageKey();
+  if (component.props.localStorageKey === false) return false;
+  if (typeof component.props.localStorageKey === 'function') return component.props.localStorageKey.call(component);
+  return component.props.localStorageKey || getDisplayName(component) || 'react-localstorage';
+}
 ```
 
 If you are synchronizing multiple components with the same `displayName` to localStorage,
-you must set a unique `localStorageKey` prop on the component.
+you must set a unique `localStorageKey` prop on the component. You may set a function as well.
 
 Alternatively, you may define the method `getLocalStorageKey` on the component's prototype.
 This gives you the freedom to choose keys depending on the component's props or state.
+
+To disable usage of localStorage entirely, pass `false` or a function that evaluates to `false`.
 
 Filtering
 ---------
