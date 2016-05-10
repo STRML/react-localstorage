@@ -221,4 +221,47 @@ describe("suite", function() {
       ls.getItem('componentStateFilterFunc')
     );
   });
+
+  it("should shut off LS syncing with localStorageKey=false", function() {
+    var component = TestUtil.renderIntoDocument(<ComponentUseDisplayName />);
+    component.setState({
+      a: 'world',
+    });
+    assert.equal(
+      JSON.stringify({a: 'world'}),
+      ls.getItem('component1')
+    );
+
+    var component2 = TestUtil.renderIntoDocument(<ComponentUseDisplayName localStorageKey={false} />);
+    component2.setState({
+      a: 'hello',
+    });
+    assert.equal(
+      JSON.stringify({a: 'world'}),
+      ls.getItem('component1')
+    );
+  });
+
+  it("should support function as LS key", function() {
+    var component = TestUtil.renderIntoDocument(
+      <ComponentUseDisplayName localStorageKey={function() { return this.props.otherKey; }} otherKey="jenkees" />
+    );
+    component.setState({
+      a: 'world',
+    });
+    assert.equal(
+      JSON.stringify({a: 'world'}),
+      ls.getItem('jenkees')
+    );
+
+    // Check returning false
+    var component2 = TestUtil.renderIntoDocument(<ComponentUseDisplayName localStorageKey={() => false} />);
+    component2.setState({
+      a: 'hello',
+    });
+    assert.equal(
+      JSON.stringify({a: 'world'}),
+      ls.getItem('jenkees')
+    );
+  });
 });

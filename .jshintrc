@@ -13,5 +13,6 @@
     "newcap"    : false,
     "browser" : true,
     "devel": true,
-    "expr": true
+    "expr": true,
+    "esnext": true
 }
