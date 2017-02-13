@@ -124,12 +124,11 @@ function getStateFilterKeys(component) {
 */
 function getSyncState(component, state) {
   var stateFilterKeys = getStateFilterKeys(component);
-  if (!stateFilterKeys) return state;
-  var result = {};
-  stateFilterKeys.forEach(function(sk) {
-    for (var key in state) {
-      if (state.hasOwnProperty(key) && sk === key) result[key] = state[key];
-    }
-  });
+  if (!stateFilterKeys || !state) return state;
+  var result = {}, key;
+  for (var i = 0; i < stateFilterKeys.length; i++) {
+    key = stateFilterKeys[i];
+    if (state.hasOwnProperty(key)) result[key] = state[key];
+  }
   return result;
 }
