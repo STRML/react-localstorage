@@ -4,8 +4,8 @@
   "description": "A mixin for automatically synchronizing a component's state with localStorage.",
   "main": "react-localstorage.js",
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start",
-    "lint": "./node_modules/.bin/jsxhint ."
+    "test": "karma start",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -22,18 +22,22 @@
   },
   "homepage": "https://github.com/STRML/react-localstorage",
   "devDependencies": {
+    "browserify": "^14.0.0",
     "envify": "~1.2.1",
+    "eslint": "^3.15.0",
     "jasmine-core": "^2.1.3",
-    "jsxhint": "^0.9.0",
-    "karma": "^0.12.28",
-    "karma-browserify": "^1.0.1",
-    "karma-chrome-launcher": "^0.1.7",
-    "karma-jasmine": "^0.3.2",
-    "precommit-hook": "^1.0.7",
-    "react": "^0.12.1",
-    "reactify": "^0.17.1"
+    "karma": "^1.4.1",
+    "karma-browserify": "^5.1.1",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0",
+    "precommit": "^1.2.2",
+    "react": "^15.4.2",
+    "react-addons-test-utils": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "reactify": "^1.1.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
-  }
+  },
+  "dependencies": {}
 }

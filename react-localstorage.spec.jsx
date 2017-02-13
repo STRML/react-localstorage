@@ -3,7 +3,8 @@
  *  @jsx React.DOM
  **/
 var React = require('react');
-var TestUtil = require('react/lib/ReactTestUtils');
+var ReactDOM = require('react-dom');
+var TestUtil = require('react-addons-test-utils');
 var LocalStorageMixin = require('./react-localstorage');
 var assert = require('assert');
 
@@ -125,7 +126,7 @@ describe("suite", function() {
     }).toThrow();
   });
 
-  it('should not throw error if we has update the component', function() {
+  it('should not throw error if we update the component', function() {
     var Component = React.createClass({
       mixins: [LocalStorageMixin],
       displayName: 'component',
@@ -139,11 +140,11 @@ describe("suite", function() {
       }
     });
     var div = document.createElement('div');
-    var component = React.render(<Component />, div);
+    var component = ReactDOM.render(<Component />, div);
     component.setState({
       hello: 'venus'
     });
-    React.unmountComponentAtNode(div);
+    ReactDOM.unmountComponentAtNode(div);
 
     // developer add a initial state for this component
     // and then deploy the updated code.
@@ -164,7 +165,7 @@ describe("suite", function() {
       }
     });
     div = document.createElement('div');
-    component = React.render(<ComponentUpdated />, div);
+    component = ReactDOM.render(<ComponentUpdated />, div);
     expect(function(){
       component.setState({
         hello: 'neptune'

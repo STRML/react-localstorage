@@ -1,5 +1,4 @@
 'use strict';
-var React = require('react');
 var warn = require('./lib/warning');
 var hasLocalStorage = 'localStorage' in global;
 var ls, testKey;
@@ -25,7 +24,7 @@ if (process.browser) {
   );
 }
 
-var Mixin = module.exports = {
+module.exports = {
   /**
    * Error checking. On update, ensure that the last state stored in localStorage is equal
    * to the state on the component. We skip the check the first time around as state is left
@@ -84,6 +83,7 @@ function loadStateFromLocalStorage(component, cb) {
       component.setState(storedState, done);
     }
   } catch(e) {
+    // eslint-disable-next-line no-console
     if (console) console.warn("Unable to load state for", getDisplayName(component), "from localStorage.");
   }
   // If we didn't set state, run the callback right away.

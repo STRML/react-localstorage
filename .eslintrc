@@ -1,0 +1,9 @@
+{
+  root: true,
+  extends: "eslint:recommended",
+  rules: {
+  },
+  env: {
+    "node": true
+  },
+}
