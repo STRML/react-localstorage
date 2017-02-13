@@ -1,4 +1,11 @@
-0.2.10 (May 10, 2016)
+0.3.1 (Feb 13, 2017)
+------
+
+- Small performance fix in `stateFilterKeys` iteration.
+- Updated development dependencies.
+
+
+0.3.0 (May 10, 2016)
 ------
 
 - Allow setting `props.localStorageKey` as a function. It will be called with the component as `this`.
