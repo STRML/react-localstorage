@@ -1,9 +1,11 @@
 {
   root: true,
-  extends: "eslint:recommended",
+  extends: [
+    "eslint:recommended",
+  ],
   rules: {
   },
   env: {
-    "node": true
+    node: true,
   },
 }
