@@ -1,3 +1,12 @@
+1.0.0 (Jan 31, 2018)
+------
+
+- Perf: Only synchronize storage on unmount.
+  - This saves a lot of stringify / localStorage churn by only saving when we must.
+  - This has a semantic change; state is not synced as often and we can
+    no longer throw errors if you have a key collision, so this is a major update.
+- Rework testing with Jest.
+
 0.3.1 (Feb 13, 2017)
 ------
 

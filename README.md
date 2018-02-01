@@ -8,29 +8,26 @@ Usage
 
 A simple component:
 
-```js
-var React = require('react');
-var LocalStorageMixin = require('react-localstorage');
+```javascript
+const React = require('react');
+const LocalStorageMixin = require('react-localstorage');
+const reactMixin = require('react-mixin');
 
-var TestComponent = module.exports = React.createClass({
-  displayName: 'TestComponent',
-  // This is all you need to do
-  mixins: [LocalStorageMixin],
+// This is all you need to do
+@reactMixin.decorate(LocalStorageMixin)
+class TestComponent extends React.Component {
+  static displayName = 'TestComponent';
 
-  getInitialState: function() {
-    return {counter: 0};
-  },
+  state = {counter: 0};
 
-  onClick: function() {
+  onClick() {
     this.setState({counter: this.state.counter + 1});
-  },
-
-  render: function() {
-    return (
-      <span onClick={this.onClick}>{this.state.counter}</span>
-    );
   }
-});
+
+  render() {
+    return <span onClick={this.onClick}>{this.state.counter}</span>;
+  }
+}
 ```
 
 Options
@@ -85,8 +82,4 @@ checksums. This is new as of `0.2.0`.
 Tests
 ------
 
-We use `karma` as the test runner. To run the test, simply `npm install` all the dependencies and run:
-
-```bash
-./node_modules/karma/bin/karma start
-```
+We use `jest` as the test runner. To run the test, simply `yarn install` all the dependencies and run `yarn test`.
