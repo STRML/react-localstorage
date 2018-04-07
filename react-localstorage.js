@@ -37,6 +37,24 @@ module.exports = {
     }
   },
 
+
+  /**
+   * Save current state to local storage
+   */
+  saveStateToLocalStorage: function() {
+    saveStateToLocalStorage(this)
+  },
+
+  /**
+   * Set state and when done save to local storage
+   */
+  setStateWithLocalStorage: function(state, callback) {
+    this.setState(state, function() {
+      saveStateToLocalStorage(this)
+      callback && callback()
+    })
+  },
+
   /**
    * Load data.
    * This seems odd to do this on componentDidMount, but it prevents server checksum errors.

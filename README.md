@@ -1,7 +1,9 @@
 React-LocalStorage
 ==================
 
-Simply synchronize a component's state with `localStorage`, when available.
+Simply synchronize a component's state with `localStorage`, when available. Synchronisation happens on unmount or page leave.
+Keep in mind that on iOS there is no page leave event. You have to save manually setStateWithLocalStorage/saveStateToLocalStorage if you absolutely
+need the state always synchronized. Same for browser crashes/etc.
 
 Usage
 -----
@@ -29,6 +31,12 @@ class TestComponent extends React.Component {
   }
 }
 ```
+
+Api
+-------
+The mixin provides two methods:
+- saveStateToLocalStorage to save the current component state to the local storage
+- setStateWithLocalStorage, which acts like setState but afterwards saves the state to the local storage
 
 Options
 -------
