@@ -2,6 +2,7 @@ React-LocalStorage
 ==================
 
 Simply synchronize a component's state with `localStorage`, when available. Synchronisation happens on unmount or page leave.
+
 Keep in mind that on iOS there is no page leave event. You have to save manually setStateWithLocalStorage/saveStateToLocalStorage if you absolutely
 need the state always synchronized. Same for browser crashes/etc.
 
