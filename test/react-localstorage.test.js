@@ -1,8 +1,7 @@
 const React = require('react');
 const TestUtil = require('react-dom/test-utils');
-const LocalStorageMixin = require('../react-localstorage');
+const withLocalStorage = require('../react-localstorage');
 const assert = require('assert');
-const reactMixin = require('react-mixin');
 
 const ls = global.localStorage;
 describe("suite", function() {
@@ -12,13 +11,13 @@ describe("suite", function() {
     console.warn = function() { throw new Error([].slice.call(arguments).join(' ')); };
   });
 
-  @reactMixin.decorate(LocalStorageMixin)
-  class ComponentUseDisplayName extends React.Component {
+  class _ComponentUseDisplayName extends React.Component {
     static displayName = 'component1';
     render() {
       return <div>hello</div>;
     }
   }
+  const ComponentUseDisplayName = withLocalStorage(_ComponentUseDisplayName)
 
   // Change in v1; we now do this on componentWillUnmount
   it("should not save after each setState", function(done) {
@@ -47,8 +46,7 @@ describe("suite", function() {
     );
   });
 
-  @reactMixin.decorate(LocalStorageMixin)
-  class ComponentUseStorageKey extends React.Component {
+  class _ComponentUseStorageKey extends React.Component {
     static displayName = 'component2';
     static defaultProps = {
       'localStorageKey': 'component-key'
@@ -57,6 +55,7 @@ describe("suite", function() {
       return <div>hello</div>;
     }
   }
+  const ComponentUseStorageKey = withLocalStorage(_ComponentUseStorageKey)
 
   it("should use this.props.localStorageKey to store into localstorage", function() {
     const component = TestUtil.renderIntoDocument(<ComponentUseStorageKey />);
@@ -70,8 +69,7 @@ describe("suite", function() {
     );
   });
 
-  @reactMixin.decorate(LocalStorageMixin)
-  class ComponentUseMethod extends React.Component {
+  class _ComponentUseMethod extends React.Component {
     static displayName = 'ComponentUseMethod';
     getLocalStorageKey() {
       return this.constructor.displayName + 'DynamicSuffix';
@@ -80,6 +78,7 @@ describe("suite", function() {
       return <div>hello</div>;
     }
   }
+  const ComponentUseMethod = withLocalStorage(_ComponentUseMethod)
 
   it("should use this.getLocalStorageKey() to store into localstorage", function() {
     const component = TestUtil.renderIntoDocument(<ComponentUseMethod />);
@@ -93,13 +92,13 @@ describe("suite", function() {
     );
   });
 
-  @reactMixin.decorate(LocalStorageMixin)
-  class ComponentWithNoSetting extends React.Component {
+  class _ComponentWithNoSetting extends React.Component {
     static displayName = 'ComponentWithNoSetting';
     render() {
       return <div>hello</div>;
     }
   }
+  const ComponentWithNoSetting = withLocalStorage(_ComponentWithNoSetting)
 
   it("should use ComponentWithNoSetting to store into localstorage", function() {
     const component = TestUtil.renderIntoDocument(<ComponentWithNoSetting />);
@@ -113,8 +112,7 @@ describe("suite", function() {
     );
   });
 
-  @reactMixin.decorate(LocalStorageMixin)
-  class ComponentUseStateFilter extends React.Component {
+  class _ComponentUseStateFilter extends React.Component {
     static displayName = 'componentStateFilter';
     static defaultProps = {
       stateFilterKeys: ['a', 'b']
@@ -123,6 +121,7 @@ describe("suite", function() {
       return <div>hello</div>;
     }
   }
+  const ComponentUseStateFilter = withLocalStorage(_ComponentUseStateFilter)
 
   it("should only use state keys that match filter", function() {
     const component = TestUtil.renderIntoDocument(<ComponentUseStateFilter />);
@@ -138,8 +137,7 @@ describe("suite", function() {
     );
   });
 
-  @reactMixin.decorate(LocalStorageMixin)
-  class ComponentUseStateFilterFunc extends React.Component {
+  class _ComponentUseStateFilterFunc extends React.Component {
     static displayName = 'componentStateFilterFunc';
     getStateFilterKeys() {
       return ['a', 'b'];
@@ -148,6 +146,7 @@ describe("suite", function() {
       return <div>hello</div>;
     }
   }
+  const ComponentUseStateFilterFunc = withLocalStorage(_ComponentUseStateFilterFunc)
 
   it("should only use state keys that match filter function", function() {
     const component = TestUtil.renderIntoDocument(<ComponentUseStateFilterFunc />);

@@ -2,7 +2,7 @@
 var warn = require('./lib/warning');
 
 var hasLocalStorage = true;
-var testKey = 'react-localstorage.mixin.test-key';
+var testKey = 'react-localstorage.hoc.test-key';
 var ls;
 try {
   // Access to global `localStorage` property must be guarded as it
@@ -22,39 +22,50 @@ if (process.browser) {
   );
 }
 
-module.exports = {
-  /**
-   * On unmount, save data.
-   *
-   * If the page unloads, this may not fire, so we also mount the function to onbeforeunload.
-   */
-  componentWillUnmount: function() {
-    saveStateToLocalStorage(this);
+module.exports = Component => {
+  // Return Component if no localStorage is available
+  if( !hasLocalStorage ) return Component
 
-    // Remove beforeunload handler if it exists.
-    if (this.__react_localstorage_beforeunload) {
-      global.removeEventListener('beforeunload', this.__react_localstorage_beforeunload);
-    }
-  },
+  const name = Component.displayName || Component.constructor.displayName || Component.constructor.name
 
-  /**
-   * Load data.
-   * This seems odd to do this on componentDidMount, but it prevents server checksum errors.
-   * This is because the server has no way to know what is in your localStorage. So instead
-   * of breaking the checksum and causing a full rerender, we instead change the component after mount
-   * for an efficient diff.
-   */
-  componentDidMount: function() {
-    loadStateFromLocalStorage(this);
+  class LocalStorageComponent extends Component {
+    /**
+     * On unmount, save data.
+     *
+     * If the page unloads, this may not fire, so we also mount the function to onbeforeunload.
+     */
+    componentWillUnmount() {
+      saveStateToLocalStorage(this);
 
-    // We won't get a componentWillUnmount event if we close the tab or refresh, so add a listener
-    // and synchronously populate LS.
-    if (hasLocalStorage && this.__react_localstorage_loaded && global.addEventListener) {
-      this.__react_localstorage_beforeunload = module.exports.componentWillUnmount.bind(this);
-      global.addEventListener('beforeunload', this.__react_localstorage_beforeunload);
+      // Remove beforeunload handler if it exists.
+      if (this.__react_localstorage_beforeunload) {
+        global.removeEventListener('beforeunload', this.__react_localstorage_beforeunload);
+      }
     }
 
+    /**
+     * Load data.
+     * This seems odd to do this on componentDidMount, but it prevents server checksum errors.
+     * This is because the server has no way to know what is in your localStorage. So instead
+     * of breaking the checksum and causing a full rerender, we instead change the component after mount
+     * for an efficient diff.
+     */
+    componentDidMount() {
+      loadStateFromLocalStorage(this);
+
+      // We won't get a componentWillUnmount event if we close the tab or refresh, so add a listener
+      // and synchronously populate LS.
+      if (hasLocalStorage && this.__react_localstorage_loaded && global.addEventListener) {
+        this.__react_localstorage_beforeunload = this.componentWillUnmount.bind(this);
+        global.addEventListener('beforeunload', this.__react_localstorage_beforeunload);
+      }
+
+    }
   }
+
+  LocalStorageComponent.displayName = name
+
+  return LocalStorageComponent
 };
 
 function loadStateFromLocalStorage(component) {

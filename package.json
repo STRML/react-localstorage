@@ -1,7 +1,7 @@
 {
   "name": "react-localstorage",
   "version": "1.0.0",
-  "description": "A mixin for automatically synchronizing a component's state with localStorage.",
+  "description": "A higher-ordered component for automatically synchronizing a component's state with localStorage.",
   "main": "react-localstorage.js",
   "scripts": {
     "test": "jest",
@@ -35,7 +35,6 @@
     "precommit": "^1.2.2",
     "react": "^16",
     "react-dom": "^16",
-    "react-mixin": "^4.0.0",
     "regenerator-runtime": "^0.11.1"
   },
   "publishConfig": {

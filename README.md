@@ -10,11 +10,9 @@ A simple component:
 
 ```javascript
 const React = require('react');
-const LocalStorageMixin = require('react-localstorage');
-const reactMixin = require('react-mixin');
+const withLocalStorage = require('react-localstorage');
 
 // This is all you need to do
-@reactMixin.decorate(LocalStorageMixin)
 class TestComponent extends React.Component {
   static displayName = 'TestComponent';
 
@@ -28,6 +26,8 @@ class TestComponent extends React.Component {
     return <span onClick={this.onClick}>{this.state.counter}</span>;
   }
 }
+
+export default withLocalStorage(TestComponent)
 ```
 
 Options
@@ -75,7 +75,7 @@ getStateFilterKeys: function() {
 Server Rendering
 ----------------
 
-`LocalStorageMixin` will call `setState` on `componentDidMount`, so it will not break server rendering
+`withLocalStorage` will call `setState` on `componentDidMount`, so it will not break server rendering
 checksums. This is new as of `0.2.0`.
 
 
