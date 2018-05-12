@@ -30,6 +30,9 @@ class TestComponent extends React.Component {
 export default withLocalStorage(TestComponent)
 ```
 
+If you need to save the state manually, call the component's `saveStateToLocalStorage()` method.
+See https://github.com/STRML/react-localstorage/pull/17 for context.
+
 Options
 -------
 

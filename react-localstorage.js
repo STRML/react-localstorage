@@ -35,12 +35,16 @@ module.exports = Component => {
      * If the page unloads, this may not fire, so we also mount the function to onbeforeunload.
      */
     componentWillUnmount() {
-      saveStateToLocalStorage(this);
+      this.saveStateToLocalStorage();
 
       // Remove beforeunload handler if it exists.
       if (this.__react_localstorage_beforeunload) {
         global.removeEventListener('beforeunload', this.__react_localstorage_beforeunload);
       }
+    }
+
+    saveStateToLocalStorage () {
+      saveStateToLocalStorage(this)
     }
 
     /**
