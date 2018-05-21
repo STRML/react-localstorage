@@ -4,9 +4,9 @@ React-LocalStorage
 Simply synchronize a component's state with `localStorage`, when available.
 
 # Install
-[![react-imagezoomable](https://nodei.co/npm/react-localstorage.png)](https://npmjs.org/package/react-localstorage)
+[![React-LocalStorage](https://nodei.co/npm/react-localstorage.png)](https://npmjs.org/package/react-localstorage)
 ```sh
-    npm install react-imagezoomable --save
+    npm i react-localstorage --save
 ```
 
 Usage
