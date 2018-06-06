@@ -162,6 +162,34 @@ describe("suite", function() {
     );
   });
 
+  class _ComponentWithLifecycle extends React.Component {
+    static displayName = 'ComponentWithLifecycle';
+    componentDidMount() {
+      this.setState({
+        a: 'world',
+      });
+    }
+    render() {
+      return <div>hello</div>;
+    }
+    componentWillUnmount() {
+      this.setState({
+        b: 'bar',
+      });
+    }
+  }
+  const ComponentWithLifecycle = withLocalStorage(_ComponentWithLifecycle)
+
+  it("should run lifecycle methods of wrapped component", async function() {
+    const component = TestUtil.renderIntoDocument(<ComponentWithLifecycle />);
+    assert.deepEqual(component.state, {a: 'world'})
+    component.componentWillUnmount();
+    assert.equal(
+      JSON.stringify({a: 'world', 'b': 'bar'}),
+      ls.getItem('ComponentWithLifecycle')
+    );
+  });
+
   it("should shut off LS syncing with localStorageKey=false", function() {
     const component = TestUtil.renderIntoDocument(<ComponentUseDisplayName />);
     component.setState({

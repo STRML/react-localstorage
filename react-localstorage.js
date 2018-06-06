@@ -35,6 +35,10 @@ module.exports = Component => {
      * If the page unloads, this may not fire, so we also mount the function to onbeforeunload.
      */
     componentWillUnmount() {
+      if (super.componentWillUnmount) {
+        super.componentWillUnmount()
+      }
+
       this.saveStateToLocalStorage();
 
       // Remove beforeunload handler if it exists.
@@ -64,6 +68,9 @@ module.exports = Component => {
         global.addEventListener('beforeunload', this.__react_localstorage_beforeunload);
       }
 
+      if (super.componentDidMount) {
+        super.componentDidMount()
+      }
     }
   }
 
