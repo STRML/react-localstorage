@@ -190,6 +190,12 @@ describe("suite", function() {
     );
   });
 
+  it("should load state before calling componentDidMount() of wrapped component", async function() {
+    ls.setItem(ComponentUseDisplayName.displayName, JSON.stringify({c: 'baz'}));
+    const component = TestUtil.renderIntoDocument(<ComponentUseDisplayName />);
+    assert.deepEqual(component.state, {c: 'baz'})
+  });
+
   it("should shut off LS syncing with localStorageKey=false", function() {
     const component = TestUtil.renderIntoDocument(<ComponentUseDisplayName />);
     component.setState({

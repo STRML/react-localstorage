@@ -1,4 +1,5 @@
 'use strict';
+const { SynchronousPromise } = require('synchronous-promise');
 var warn = require('./lib/warning');
 
 var hasLocalStorage = true;
@@ -59,18 +60,18 @@ module.exports = Component => {
      * for an efficient diff.
      */
     componentDidMount() {
-      loadStateFromLocalStorage(this);
+      loadStateFromLocalStorage(this).then(() => {
+        // We won't get a componentWillUnmount event if we close the tab or refresh, so add a listener
+        // and synchronously populate LS.
+        if (hasLocalStorage && this.__react_localstorage_loaded && global.addEventListener) {
+          this.__react_localstorage_beforeunload = this.componentWillUnmount.bind(this);
+          global.addEventListener('beforeunload', this.__react_localstorage_beforeunload);
+        }
 
-      // We won't get a componentWillUnmount event if we close the tab or refresh, so add a listener
-      // and synchronously populate LS.
-      if (hasLocalStorage && this.__react_localstorage_loaded && global.addEventListener) {
-        this.__react_localstorage_beforeunload = this.componentWillUnmount.bind(this);
-        global.addEventListener('beforeunload', this.__react_localstorage_beforeunload);
-      }
-
-      if (super.componentDidMount) {
-        super.componentDidMount()
-      }
+        if (super.componentDidMount) {
+          super.componentDidMount()
+        }
+      })
     }
   }
 
@@ -80,17 +81,18 @@ module.exports = Component => {
 };
 
 function loadStateFromLocalStorage(component) {
-  if (!hasLocalStorage) return;
-  var key = getLocalStorageKey(component);
-  if (key === false) return;
-  try {
+  return SynchronousPromise.resolve().then(() => {
+    if (!hasLocalStorage) return;
+    var key = getLocalStorageKey(component);
+    if (key === false) return;
     var storedState = JSON.parse(ls.getItem(key));
-    if (storedState) component.setState(storedState);
-  } catch(e) {
+    if (storedState) return new SynchronousPromise(resolve => component.setState(storedState, resolve));
+  }).catch(() => {
     // eslint-disable-next-line no-console
     if (console) console.warn("Unable to load state for", getDisplayName(component), "from localStorage.");
-  }
-  component.__react_localstorage_loaded = true;
+  }).then(() => {
+    component.__react_localstorage_loaded = true;
+  })
 }
 
 
