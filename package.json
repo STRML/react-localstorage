@@ -22,21 +22,21 @@
   },
   "homepage": "https://github.com/STRML/react-localstorage",
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.1",
-    "babel-jest": "^22.1.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-preset-react": "^6.24.1",
-    "eslint": "^4.16.0",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.2",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.1.0",
     "eslint-plugin-react": "^7.6.1",
-    "jest": "^22.1.4",
+    "jest": "^24.9.0",
     "jest-localstorage-mock": "^2.2.0",
-    "precommit": "^1.2.2",
+    "pre-commit": "^1.2.2",
     "react": "^16",
     "react-dom": "^16",
     "react-mixin": "^4.0.0",
-    "regenerator-runtime": "^0.11.1"
+    "regenerator-runtime": "^0.13.3"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
