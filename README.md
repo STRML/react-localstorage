@@ -3,6 +3,8 @@ React-LocalStorage
 
 Simply synchronize a component's state with `localStorage`, when available.
 
+This is an old-style Mixin, which means it's probably compatible with your React application if it's a few years old. If you're a hip young programmer, you might prefer [a hook, instead](https://usehooks.com/useLocalStorage/).
+
 # Install
 [![React-LocalStorage](https://nodei.co/npm/react-localstorage.png)](https://npmjs.org/package/react-localstorage)
 ```sh
