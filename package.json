@@ -27,15 +27,15 @@
     "@babel/plugin-proposal-decorators": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.2",
-    "babel-jest": "^24.9.0",
+    "babel-jest": "^25.2.6",
     "eslint": "^6.1.0",
     "eslint-plugin-react": "^7.6.1",
-    "jest": "^24.9.0",
+    "jest": "^25.2.7",
     "jest-localstorage-mock": "^2.2.0",
     "pre-commit": "^1.2.2",
     "react": "^16",
     "react-dom": "^16",
-    "react-mixin": "^4.0.0",
+    "react-mixin": "^5.0.0",
     "regenerator-runtime": "^0.13.3"
   },
   "publishConfig": {
